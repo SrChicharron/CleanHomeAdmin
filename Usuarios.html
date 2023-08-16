@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>CleanHome Admin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!----css3---->
+    <link rel="stylesheet" href="css/custom.css" />
+    <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
+        rel="stylesheet" />
+
+    <!--google material icon-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="body-overlay"></div>
+
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <img src="img/imagotipo.svg" class="img-fluid" style="width: 70px; height: 70px;"/>
+            </div>
+            
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="index.html" class="dashboard"><i class="material-icons">cleaning_services</i><span>Home</span></a>
+                </li>
+
+                <li class="active">
+                    <a href="/Propiedades.html" class="dashboard"><i class="material-icons">home</i><span>Propiedades</span></a>
+                </li>
+
+                <li class="active">
+                    <a href="/Usuarios.html" class="dashboard"><i class="material-icons">person</i><span>Usuarios</span></a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            <div class="top-navbar">
+                <nav class="navbar navbar-expand-lg">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapse" class="d-xl-block d-lg-block d-md-mone d-none">
+                            <span class="material-icons">arrow_back_ios</span>
+                        </button>
+
+                        <a class="navbar-brand" href="#"> CleanHome </a>
+                        
+
+                        <button class="d-inline-block d-lg-none ml-auto more-button" type="button"
+                            data-toggle="collapse" data-target="#navbarSupportedContent"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="material-icons">more_vert</span>
+                        </button>
+
+                        <div class="collapse navbar-collapse d-lg-block d-xl-block d-sm-none d-md-none d-none"
+                            id="navbarSupportedContent">
+                            <ul class="nav navbar-nav ml-auto">
+                                <li class="dropdown nav-item active">
+                                    <a href="#" class="nav-link" data-toggle="dropdown">
+                                        <span class="material-icons">notifications</span>
+                                        <span class="notification">0</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="#">You have 5 new msg</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">You're now friend with Mike</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Wish Mary on her birthday!</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">5 warnings in Server Console</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span class="material-icons">apps</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span class="material-icons">person</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">
+                                        <span class="material-icons">settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+
+            <script>
+                var data={}
+                                    async function consumirAPIUsuarios(){
+                                    const urlgetUsuarios='https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/auth/getUsuarios';
+
+                                    fetch(urlgetUsuarios).then(response => {
+                                    return response.json();
+                                    
+                                    
+                                    }).then(res => {
+                                       
+                                    console.log(res);
+                                    mostrarDatosPropiedades(res);
+                                    
+                                    }).catch(err => {
+                                    console.log(err);
+                                    });
+        
+                                    };
+
+                                    function mostrarDatosPropiedades(res) {
+                                        const listaUsuarios = document.getElementById('usuariosList');
+                                        if(res==null){
+                                            const tituloNoHay=document.createElement('h2')
+                                            tituloNoHay.textContent='Por el momento no hay propiedades registradas.'
+                                            tituloNoHay.className-'text-danger';
+                                            listaUsuarios.appendChild(tituloNoHay);
+                                        } else{
+                                        res.map(usuario => {
+                                            const username=usuario.username;
+                                            
+                                            const divCard=document.createElement('div');
+                                            divCard.className='col-lg-4'
+                                            const divPropiedad = document.createElement('div');
+                                            divPropiedad.className='card-body';
+                                            const divPropiedadFooter =document.createElement('div');
+                                            divPropiedadFooter.className='card-footer'
+                                           
+                                            const images =document.createElement('img')
+                                            const h5Nombre = document.createElement('h3');
+                                            const pusername = document.createElement('p');
+                                            const pemail= document.createElement('p');
+                                            const pRol = document.createElement('p');
+                                            const pCellphone = document.createElement('p');
+                                            const pBirthday = document.createElement('p');
+                                            const pStatus = document.createElement('p');
+
+                                            images.src='https://www.shutterstock.com/shutterstock/photos/1214032003/display_1500/stock-vector-id-card-ine-icon-1214032003.jpg';
+                                            images.alt='Imagenes de la propiedad';
+                                            images.className='card-img-top';
+                                            
+                                            h5Nombre.textContent = `${usuario.informacion.map(x => x.name)} ${usuario.informacion.map(x => x.lastname)}`;
+                                            pusername.textContent = `Usuario: ${usuario.username}`;
+                                            pemail.textContent = `Email: ${usuario.email}`;
+                                            pRol.textContent = `Rol: ${usuario.authorities.map(x => x.authority)}`;
+                                            pCellphone.textContent = `Telefono: ${usuario.informacion.map(x => x.cellphone)}`;
+                                            pBirthday.textContent = `Fecha de nacimiento: ${usuario.informacion.map(x => x.birthday.split(' ')[0])}`;
+                                            pStatus.textContent = `Estado: ${usuario.enabled}`;
+
+                                            const aceptarButton = document.createElement('button');
+                                            aceptarButton.id='btnEditar';
+                                            aceptarButton.textContent = 'Aceptar';
+                                            aceptarButton.className='btn btn-success btn-lg btn-block'
+                                            aceptarButton.addEventListener('click', () => aceptarUsuario(username));
+
+                                            const rechazarButton = document.createElement('button');
+                                            rechazarButton.textContent = 'Rechazar';
+                                            rechazarButton.className='btn btn-danger btn-lg btn-block '
+                                            rechazarButton.addEventListener('click', () => rechazarUsuario(username));
+
+                                            divPropiedadFooter.appendChild(aceptarButton);
+                                            divPropiedadFooter.appendChild(rechazarButton);
+                                            
+                                            divCard.appendChild(images);
+                                            divCard.appendChild(divPropiedad);
+                                            divPropiedad.appendChild(h5Nombre);
+                                            divPropiedad.appendChild(pusername);
+                                            divPropiedad.appendChild(pemail);
+                                            divPropiedad.appendChild(pRol);
+                                            divPropiedad.appendChild(pCellphone);
+                                            divPropiedad.appendChild(pBirthday);
+                                            divPropiedad.appendChild(pStatus);
+                                            divPropiedad.appendChild(divPropiedadFooter);
+
+                                            listaUsuarios.appendChild(divCard);
+                                        });
+                                    }
+                                    }
+
+                                    async function aceptarUsuario(username){
+                                            const urlupdatePropiedasEstatus = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/auth/editarEstatusUser/${username}`;
+                                            const dataEstatus={
+                                                enabled:true
+                                            }
+                                            try {
+                                            const response = await fetch(urlupdatePropiedasEstatus, {
+                                                method: 'PUT',
+                                                headers: {
+                                                    "Access-Control-Allow-Origin": "*",
+                                                    "Access-Control-Allow-Headers": "PUT, GET, POST, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin",
+                                                    "Content-Type": "application/json",
+                                                },
+                                                body: JSON.stringify(dataEstatus)
+                                            });
+
+                                            if (response.ok) {
+                                                location.reload(); // Actualizar la tabla después de editar el servicio
+                                            } else {
+                                                console.error('Error al editar al usuario:', response.status, response.statusText);
+                                            }
+                                        } catch (error) {
+                                            console.error('Error en la solicitud:', error);
+                                        }
+
+                                    }
+
+                                    async function rechazarUsuario(username){
+                                            const urlupdatePropiedasEstatus = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/auth/editarEstatusUser/${username}`;
+                                            const dataEstatus={
+                                                estatus:false
+                                            }
+                                            try {
+                                            const response = await fetch(urlupdatePropiedasEstatus, {
+                                                method: 'PUT',
+                                                headers: {
+                                                    "Access-Control-Allow-Origin": "*",
+                                                    "Access-Control-Allow-Headers": "PUT, GET, POST, DELETE, OPTIONS, HEAD, Authorization, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Access-Control-Allow-Origin",
+                                                    "Content-Type": "application/json",
+                                                },
+                                                body: JSON.stringify(dataEstatus)
+                                            });
+
+                                            if (response.ok) {
+                                                location.reload(); // Actualizar la tabla después de editar el servicio
+                                            } else {
+                                                console.error('Error al editar al usuario:', response.status, response.statusText);
+                                            }
+                                        } catch (error) {
+                                            console.error('Error en la solicitud:', error);
+                                        }
+
+                                    }
+                            consumirAPIUsuarios();
+
+            </script>
+
+            <div class="main-content">
+                <h2>Nuevos Usuarios</h2>
+                <div id="usuariosList" style="grid-template-columns: repeat(auto-fill,240px)" class="row">
+                
+                </div>
+                
+                <div class="row">
+                    
+                    
+                    
+                
+                </div>
+            </div>
+
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <nav class="d-flex">
+                                    <ul class="m-0 p-0">
+                                        <li>
+                                            <a href="#"> Home </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Company </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Portfolio </a>
+                                        </li>
+                                        <li>
+                                            <a href="#"> Blog </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="copyright d-flex justify-content-end">
+                                    &copy 2023 Design by
+                                    <a href="https://front-end-designer.netlify.app/">Front-End-Designer
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#sidebarCollapse").on("click", function () {
+                $("#sidebar").toggleClass("active");
+                $("#content").toggleClass("active");
+            });
+
+            $(".more-button,.body-overlay").on("click", function () {
+                $("#sidebar,.body-overlay").toggleClass("show-nav");
+            });
+        });
+    </script>
+</body>
+
+</html>

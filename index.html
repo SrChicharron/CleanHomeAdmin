@@ -128,7 +128,7 @@
                                 <script>
 
                                     async function consumirAPI(){
-                                    const urlServicios='https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/servicio/getServicios';
+                                    const urlServicios='http://clenhometm.trafficmanager.net:2813/ch/servicio/getServicios';
 
                                     fetch(urlServicios).then(response => {
                                     return response.json();
@@ -179,7 +179,7 @@
                                     }
 
                                     async function guardarServicio(nuevoServicio) {
-                                        const urlAddServicio = 'https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/servicio/agregarServicio';
+                                        const urlAddServicio = 'http://clenhometm.trafficmanager.net:2813/ch/servicio/agregarServicio';
 
                                         try {
                                             const response = await fetch(urlAddServicio, {
@@ -205,7 +205,7 @@
                                     }
 
                                     async function obtenerDetallesServicio(idServicio) {
-                                        const urlDetalleServicio = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/servicio/getServicio/${idServicio}`;
+                                        const urlDetalleServicio = `http://clenhometm.trafficmanager.net:2813/ch/servicio/getServicio/${idServicio}`;
 
                                         try {
                                             const response = await fetch(urlDetalleServicio);
@@ -232,7 +232,7 @@
                                     }
 
                                     async function editarServicio(idServicio, servicioEditado) {
-                                        const urlEditarServicio = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/servicio/editarServicio/${idServicio}`;
+                                        const urlEditarServicio = `http://clenhometm.trafficmanager.net:2813/ch/servicio/editarServicio/${idServicio}`;
 
                                         try {
                                             const response = await fetch(urlEditarServicio, {
@@ -258,7 +258,7 @@
                                     
 
                                     async function eliminarServicio(idServicio) {
-                                        const urlEliminarServicio = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/servicio/eliminarServicio/${idServicio}`;
+                                        const urlEliminarServicio = `http://clenhometm.trafficmanager.net:2813/ch/servicio/eliminarServicio/${idServicio}`;
 
                                         try {
                                             const response = await fetch(urlEliminarServicio, {

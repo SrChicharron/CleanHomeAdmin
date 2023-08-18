@@ -113,7 +113,7 @@
             <script>
 
                                     async function consumirAPIPropiedades(){
-                                    const urlgetPropiedades='https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/propiedad/getallPropiedades';
+                                    const urlgetPropiedades='http://clenhometm.trafficmanager.net:2813/ch/propiedad/getallPropiedades';
 
                                     fetch(urlgetPropiedades).then(response => {
                                     return response.json();
@@ -129,72 +129,127 @@
                                     };
 
                                     function mostrarDatosPropiedades(res) {
-                                        const listPropiedades = document.getElementById('propiedadesList');
-                                        if(res==null){
-                                            const tituloNoHay=document.createElement('h2')
-                                            tituloNoHay.textContent='Por el momento no hay propiedades registradas.'
-                                            tituloNoHay.className-'text-danger'
-                                        } else{
-                                        res.map(propiedad => {
-                                            const idPropiedad=propiedad.id;
+    const listPropiedades = document.getElementById('propiedadesList');
+    listPropiedades.innerHTML = ''; // Limpiar la lista antes de agregar nuevas propiedades
+    
+    if (res == null) {
+        const tituloNoHay = document.createElement('h2');
+        tituloNoHay.textContent = 'Por el momento no hay propiedades registradas.';
+        tituloNoHay.className = 'text-danger';
+        listPropiedades.appendChild(tituloNoHay);
+    } else {
+        res.map(propiedad => {
+            const idPropiedad = propiedad.id;
 
-                                            const divCard=document.createElement('div');
-                                            divCard.className='col-lg-5 col-md-4 col-sm-6'
-                                            const divPropiedad = document.createElement('div');
-                                            divPropiedad.className='card-body';
-                                            const divPropiedadFooter =document.createElement('div');
-                                            divPropiedadFooter.className='card-footer'
-                                           
-                                            const images =document.createElement('img')
-                                            const h5Titulo = document.createElement('h3');
-                                            const pDireccion = document.createElement('p');
-                                            const pReferencias = document.createElement('p');
-                                            const pEstatus = document.createElement('p');
-                                            const pTipo = document.createElement('p');
-                                            const pEstado = document.createElement('p');
+            const divCard = document.createElement('div');
+            divCard.className = 'col-lg-5 col-md-4 col-sm-6';
 
-                                            images.src='https://i.blogs.es/c68014/casa-3d/840_560.jpeg';
-                                            images.alt='Imagenes de la propiedad';
-                                            images.className='card-img-top';
-                                            
-                                            h5Titulo.textContent = propiedad.titulo;
-                                            pDireccion.textContent = `Calle: ${propiedad.calle}, #${propiedad.numeroExt}, C.P.: ${propiedad.codigoPostal}, Colonia: ${propiedad.colonia}`;
-                                            pReferencias.textContent = `Referencia: ${propiedad.referencias}`;
-                                            pEstatus.textContent = `Estatus: ${propiedad.estatus}`;
-                                            pTipo.textContent = `Tipo propiedad: ${propiedad.tipoPropiedad.tipo}`;
-                                            pEstado.textContent = `Estado: ${propiedad.estado.estado}`;
+            const divPropiedad = document.createElement('div');
+            divPropiedad.className = 'card-body';
 
-                                            const aceptarButton = document.createElement('button');
-                                            aceptarButton.id='btnEditar';
-                                            aceptarButton.textContent = 'Aceptar';
-                                            aceptarButton.className='btn btn-success btn-lg btn-block'
-                                            aceptarButton.addEventListener('click', () => aceptarPropiedad(idPropiedad));
+            const divCarousel = document.createElement('div');
+            divCarousel.className = 'carousel slide';
+            divCarousel.id = `carousel-${idPropiedad}`;
+            divCarousel.setAttribute('data-ride', 'carousel');
 
-                                            const rechazarButton = document.createElement('button');
-                                            rechazarButton.textContent = 'Rechazar';
-                                            rechazarButton.className='btn btn-danger btn-lg btn-block '
-                                            rechazarButton.addEventListener('click', () => rechazarPropiedad(idPropiedad));
+            const carouselInner = document.createElement('div');
+            carouselInner.className = 'carousel-inner';
 
-                                            divPropiedadFooter.appendChild(aceptarButton);
-                                            divPropiedadFooter.appendChild(rechazarButton);
-                                            
-                                            divCard.appendChild(images);
-                                            divCard.appendChild(divPropiedad);
-                                            divPropiedad.appendChild(h5Titulo);
-                                            divPropiedad.appendChild(pDireccion);
-                                            divPropiedad.appendChild(pReferencias);
-                                            divPropiedad.appendChild(pEstatus);
-                                            divPropiedad.appendChild(pTipo);
-                                            divPropiedad.appendChild(pEstado);
-                                            divPropiedad.appendChild(divPropiedadFooter);
+            propiedad.foto.forEach((foto, index) => {
+                const carouselItem = document.createElement('div');
+                carouselItem.className = index === 0 ? 'carousel-item active' : 'carousel-item';
 
-                                            listPropiedades.appendChild(divCard);
-                                        });
-                                    }
-                                    }
+                const img = document.createElement('img');
+                img.src = `http://74.208.25.75/images/cleanhome/${foto.foto}`;
+                img.alt = 'Imagen de la propiedad';
+                img.className = 'd-block w-100';
+
+                carouselItem.appendChild(img);
+                carouselInner.appendChild(carouselItem);
+            });
+
+            const carouselPrev = document.createElement('a');
+            carouselPrev.className = 'carousel-control-prev';
+            carouselPrev.href = `#carousel-${idPropiedad}`;
+            carouselPrev.role = 'button';
+            carouselPrev.setAttribute('data-slide', 'prev');
+
+            const prevIcon = document.createElement('span');
+            prevIcon.className = 'carousel-control-prev-icon';
+            prevIcon.setAttribute('aria-hidden', 'true');
+            carouselPrev.appendChild(prevIcon);
+
+            const carouselNext = document.createElement('a');
+            carouselNext.className = 'carousel-control-next';
+            carouselNext.href = `#carousel-${idPropiedad}`;
+            carouselNext.role = 'button';
+            carouselNext.setAttribute('data-slide', 'next');
+
+            const nextIcon = document.createElement('span');
+            nextIcon.className = 'carousel-control-next-icon';
+            nextIcon.setAttribute('aria-hidden', 'true');
+            carouselNext.appendChild(nextIcon);
+
+            carouselPrev.appendChild(prevIcon);
+            carouselNext.appendChild(nextIcon);
+
+            divCarousel.appendChild(carouselInner);
+            divCarousel.appendChild(carouselPrev);
+            divCarousel.appendChild(carouselNext);
+
+            const h5Titulo = document.createElement('h3');
+            h5Titulo.textContent = propiedad.titulo;
+
+            const pDireccion = document.createElement('p');
+            pDireccion.textContent = `Calle: ${propiedad.calle}, #${propiedad.numeroExt}, C.P.: ${propiedad.codigoPostal}, Colonia: ${propiedad.colonia}`;
+
+            const pReferencias = document.createElement('p');
+            pReferencias.textContent = `Referencia: ${propiedad.referencias}`;
+
+            const pEstatus = document.createElement('p');
+            pEstatus.textContent = `Estatus: ${propiedad.estatus}`;
+
+            const pTipo = document.createElement('p');
+            pTipo.textContent = `Tipo propiedad: ${propiedad.tipoPropiedad.tipo}`;
+
+            const pEstado = document.createElement('p');
+            pEstado.textContent = `Estado: ${propiedad.estado.estado}`;
+
+            const aceptarButton = document.createElement('button');
+            aceptarButton.id = 'btnEditar';
+            aceptarButton.textContent = 'Aceptar';
+            aceptarButton.className = 'btn btn-success btn-lg btn-block';
+            aceptarButton.addEventListener('click', () => aceptarPropiedad(idPropiedad));
+
+            const rechazarButton = document.createElement('button');
+            rechazarButton.textContent = 'Rechazar';
+            rechazarButton.className = 'btn btn-danger btn-lg btn-block';
+            rechazarButton.addEventListener('click', () => rechazarPropiedad(idPropiedad));
+
+            const divPropiedadFooter = document.createElement('div');
+            divPropiedadFooter.className = 'card-footer';
+            divPropiedadFooter.appendChild(aceptarButton);
+            divPropiedadFooter.appendChild(rechazarButton);
+
+            divCard.appendChild(divPropiedad);
+            divCard.appendChild(divCarousel);
+            divPropiedad.appendChild(h5Titulo);
+            divPropiedad.appendChild(pDireccion);
+            divPropiedad.appendChild(pReferencias);
+            divPropiedad.appendChild(pEstatus);
+            divPropiedad.appendChild(pTipo);
+            divPropiedad.appendChild(pEstado);
+            divPropiedad.appendChild(divPropiedadFooter);
+
+            listPropiedades.appendChild(divCard);
+        });
+    }
+}
+
+
 
                                     async function aceptarPropiedad(idPropiedad){
-                                            const urlupdatePropiedasEstatus = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/propiedad/editarEstadoPropiedad/${idPropiedad}`;
+                                            const urlupdatePropiedasEstatus = `http://clenhometm.trafficmanager.net:2813/ch/propiedad/editarEstadoPropiedad/${idPropiedad}`;
                                             const dataEstatus={
                                                 estatus:'aprobado'
                                             }
@@ -221,7 +276,7 @@
                                     }
 
                                     async function rechazarPropiedad(idPropiedad){
-                                            const urlupdatePropiedasEstatus = `https://cleanhomeapi.ashymeadow-04120cb0.westus2.azurecontainerapps.io/ch/propiedad/editarEstadoPropiedad/${idPropiedad}`;
+                                            const urlupdatePropiedasEstatus = `http://clenhometm.trafficmanager.net:2813/ch/propiedad/editarEstadoPropiedad/${idPropiedad}`;
                                             const dataEstatus={
                                                 estatus:'rechazada'
                                             }
